@@ -2,7 +2,7 @@ import express from 'express';
 import { configDotenv } from 'dotenv';
 import cors from 'cors';
 import { connectToDb } from './db/db.js';
-import  {userRoutes}  from './routes/userRoutes.js';
+import  userRouter  from './routes/userRoutes.js';
 
 configDotenv();
 export const app = express();
@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended: true}));
  });
 
  // Mount the router
- app.use('/users', userRoutes);
+ app.use('/users', userRouter);
 
  app.use('*',(req,res)=>{
     res.status(404).json({

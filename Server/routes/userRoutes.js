@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import { registerUser } from "../controllers/user.controllers.js";
-const router = Router();
+const userRouter = Router();
 
-export const userRoutes = router.post('/register',[
+ userRouter.post('/register',[
     body('email').isEmail().withMessage('Invalid Email'),
     body('fullname.firstname').isLength({min:3 })
          .withMessage('first name must be at least 3 characters long'),
@@ -12,3 +12,7 @@ export const userRoutes = router.post('/register',[
     ],
    registerUser
  )  
+
+
+
+ export default userRouter;

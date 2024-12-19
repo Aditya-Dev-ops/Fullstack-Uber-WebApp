@@ -138,4 +138,4 @@ curl -X POST http://localhost:1200/users/register \
    - Value: `application/json`
 4. In Body tab, select 'raw' and 'JSON'
 5. Enter the request body as shown above
-6. Send the request
+6. Send the request 
