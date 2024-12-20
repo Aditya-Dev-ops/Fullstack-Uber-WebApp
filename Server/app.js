@@ -1,8 +1,9 @@
 import express from 'express';
 import { configDotenv } from 'dotenv';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { connectToDb } from './db/db.js';
-import  userRouter  from './routes/userRoutes.js';
+import  userRoutes  from './routes/userRoutes.js';
 
 configDotenv();
 export const app = express();
@@ -12,17 +13,18 @@ connectToDb();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
 
- app.get('/',(req,res)=>{
+app.get('/',(req,res)=>{
     console.log("Page load");
     res.send('Hello World');
- });
+});
 
- // Mount the router
- app.use('/users', userRouter);
+// Mount the router
+app.use('/users',userRoutes);
 
- app.use('*',(req,res)=>{
+app.use('*',(req,res)=>{
     res.status(404).json({
        status:"fail",
     });
- }); 
+}); 
