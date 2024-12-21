@@ -21,7 +21,8 @@ const userRoutes = Router();
   loginUser
 )
 
-userRoutes.get('/profile',authUser , getUserProfile)
+userRoutes.get('/profile',authUser , getUserProfile);
 
-userRoutes.get('/logout',authUser,getUserLogout)
+userRoutes.get('/logout',authUser,getUserLogout);
+
 export default userRoutes;

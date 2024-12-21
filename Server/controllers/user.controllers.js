@@ -4,7 +4,7 @@ import { validationResult } from "express-validator";
 // import { authUser } from "../middleware/authMiddleware.js";
 import BlacklistToken from '../models/blacklistTokenModel.js';
 
-export const registerUser = async(req , res , next) => {
+ export const registerUser = async(req , res , next) => {
     try{ 
     const errors = validationResult(req);
 
@@ -48,8 +48,9 @@ export const loginUser = async(req, res, next) => {
         if(!checkPassword){
             return res.status(404).json({message:"Invalid email or password"})
         }
-        
-        delete user.password;
+        const updateduser = user.toObject();
+
+        delete updateduser.password;
         const token = user.generateAuthToken();
         
         // Set cookie with expiration
@@ -62,7 +63,7 @@ export const loginUser = async(req, res, next) => {
 
         res.status(201).json({
             status: "Success",
-            data: user,
+            data: updateduser,
             token
         });
     } catch(err) {
@@ -75,7 +76,7 @@ export const loginUser = async(req, res, next) => {
 
 export const getUserProfile = async (req ,res ,next)=>{
  try {
-    res.status(200).json(req.user);
+    res.status(200).json(req.data);
  } catch (error) {
     res.status(401).json({
             message:error   
@@ -101,4 +102,4 @@ export const getUserLogout = async(req, res, next) => {
             message: "Error during logout"
         });
     }
-}
+ } 

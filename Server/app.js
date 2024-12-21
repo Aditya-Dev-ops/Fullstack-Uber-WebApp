@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { connectToDb } from './db/db.js';
 import  userRoutes  from './routes/userRoutes.js';
+import captainRoutes  from './routes/captainRoutes.js';
 
 configDotenv();
 export const app = express();
@@ -21,7 +22,8 @@ app.get('/',(req,res)=>{
 });
 
 // Mount the router
-app.use('/users',userRoutes);
+app.use('/users', userRoutes);
+app.use('/captains', captainRoutes);
 
 app.use('*',(req,res)=>{
     res.status(404).json({
