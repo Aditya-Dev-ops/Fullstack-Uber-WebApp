@@ -19,7 +19,7 @@ const userRoutes = Router();
   body('password').isLength({min:6}).withMessage('Invalid Password')
  ],
   loginUser
-)
+)  
 
 userRoutes.get('/profile',authUser , getUserProfile);
 

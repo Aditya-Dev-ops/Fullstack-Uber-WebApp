@@ -76,7 +76,7 @@ export const loginUser = async(req, res, next) => {
 
 export const getUserProfile = async (req ,res ,next)=>{
  try {
-    res.status(200).json(req.data);
+    res.status(200).json(req.user);
  } catch (error) {
     res.status(401).json({
             message:error   
