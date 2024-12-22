@@ -62,7 +62,7 @@ export const authCaptain = async (req, res, next) => {
                 status: "fail",
                 message: 'Unauthorized Access - No token provided'
             });
-        }
+        } 
 
         // Check if token is blacklisted
         const isTokenBlacklisted = await BlacklistToken.findOne({ token });
@@ -87,7 +87,6 @@ export const authCaptain = async (req, res, next) => {
         req.captain = captain;
         req.token = token;
         next();
-        
     } catch (err) {
         // Handle JWT expiration error specifically
         if (err.name === 'TokenExpiredError') {

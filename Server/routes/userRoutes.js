@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { getUserLogout, getUserProfile, loginUser, registerUser } from "../controllers/user.controllers.js";
+import { getLogoutUser, getUserProfile, loginUser, registerUser } from "../controllers/user.controllers.js";
 import { authUser } from "../middleware/authMiddleware.js";
 const userRoutes = Router();
 
@@ -23,6 +23,6 @@ const userRoutes = Router();
 
 userRoutes.get('/profile',authUser , getUserProfile);
 
-userRoutes.get('/logout',authUser,getUserLogout);
+userRoutes.get('/logout',authUser,getLogoutUser);
 
 export default userRoutes;

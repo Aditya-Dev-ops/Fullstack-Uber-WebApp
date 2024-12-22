@@ -84,13 +84,13 @@ export const getUserProfile = async (req ,res ,next)=>{
  }
 };
 
-export const getUserLogout = async(req, res, next) => {
+export const getLogoutUser = async(req, res, next) => {
     try {
         // Add token to blacklist
         await BlacklistToken.create({ token: req.cookies.token || req.headers.authorization?.split(" ")[1] });
         
         // Clear the cookie
-        res.clearCookie('token');
+        res.clearCookie('token');   
         
         res.status(200).json({
             status: "success",
