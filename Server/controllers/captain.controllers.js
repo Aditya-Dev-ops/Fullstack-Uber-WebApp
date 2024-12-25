@@ -39,7 +39,7 @@ export const createCaptain = async (req, res, next) => {
             message: error.message
         });
     }
-};
+ };
 
 export const loginCaptain = async (req,res,next) =>{
     try {
@@ -81,7 +81,7 @@ export const loginCaptain = async (req,res,next) =>{
             message: error
         });
     }
-}
+ };
 
 export const getcaptainProfile = async (req ,res ,next)=>{
     try {
@@ -91,7 +91,7 @@ export const getcaptainProfile = async (req ,res ,next)=>{
                message:error   
            })
     }
-};
+ };
 
 export const getLogoutCaptain = async(req, res, next) => {
     try {
@@ -113,5 +113,4 @@ export const getLogoutCaptain = async(req, res, next) => {
             message: "Error during logout"
         });
     }
- } 
-
+ }; 

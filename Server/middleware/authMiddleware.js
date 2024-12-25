@@ -35,8 +35,7 @@ export const authUser = async (req, res, next) => {
         
         req.user = user;
         req.token = token;
-        next();
-        
+        next();``
     } catch (err) {
         // Handle JWT expiration error specifically
         if (err.name === 'TokenExpiredError') {
