@@ -1,8 +1,13 @@
-import { useState } from "react";
-import {Link} from "react-router-dom";
+import axios from "axios";
+import { useContext, useState } from "react";
+import {Link, useNavigate} from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+
 const UserLogin = () => {
   const [email ,setemail] = useState("");
   const [password , setpassword] = useState(""); 
+  const {user , setuser} = useContext(UserContext);
+  const navigate = useNavigate();
   function changeEmail(e){
     e.preventDefault();
     setemail(e.target.value);
@@ -12,14 +17,26 @@ const UserLogin = () => {
     setpassword(e.target.value)
   }
 
-  function FormSubmit(e){
+  async function FormSubmit(e){
     e.preventDefault();
-    console.log({
-      email,
-      password
-    });
+   const data = {
+    email,
+    password
+  };
     setemail("");
     setpassword("");
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/login`,data);
+      console.log(response)
+      if(response.status > 199 && response.status<300){
+           localStorage.setItem('user',JSON.stringify(response.data.data))
+           localStorage.setItem('token',response.data.token)
+         navigate('/home')
+         } 
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
   return (
   <div className="flex flex-col justify-between h-screen overflow-hidden">

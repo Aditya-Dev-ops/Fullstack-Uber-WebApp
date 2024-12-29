@@ -19,9 +19,10 @@ import BlacklistToken from '../models/blacklistTokenModel.js';
    const user = await createUser({
     firstname , lastname , email , password:hashedPassword
    })
+   console.log(user)
    const token = user.generateAuthToken();
    res.status(201).json({
-    token , user
+    token , data:user
    }) 
 }
 catch(err){
@@ -76,7 +77,9 @@ export const loginUser = async(req, res, next) => {
 
 export const getUserProfile = async (req ,res ,next)=>{
  try {
-    res.status(200).json(req.user);
+    res.status(200).json({
+        data:req.user
+    });
  } catch (error) {
     res.status(401).json({
             message:error   
@@ -87,19 +90,21 @@ export const getUserProfile = async (req ,res ,next)=>{
 export const getLogoutUser = async(req, res, next) => {
     try {
         // Add token to blacklist
-        await BlacklistToken.create({ token: req.cookies.token || req.headers.authorization?.split(" ")[1] });
-        
+        console.log("Run Logout" , req.token  , req.headers , "This is 93 line" , res.cookie )
+       const data =  await BlacklistToken.create({ token: req.token || req.headers.authorization?.split(" ")[1] });
         // Clear the cookie
-        res.clearCookie('token');   
-        
+        console.log(data , "THis is 96 data");
+        //  res.clearCookie('token');   
         res.status(200).json({
             status: "success",
             message: "Logged out successfully"
         });
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             status: "fail",
-            message: "Error during logout"
+            message: "Error during logout",
+            error
         });
-    }
- } 
+    } 
+ }

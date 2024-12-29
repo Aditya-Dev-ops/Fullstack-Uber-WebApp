@@ -6,13 +6,13 @@ import { CaptainModel } from "../models/captainModel.js";
 export const authUser = async (req, res, next) => {
     try {
         const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
-        
+
         if (!token) {
             return res.status(401).json({
                 status: "fail",
                 message: 'Unauthorized Access - No token provided'
             });
-        }
+        } 
 
         // Check if token is blacklisted
         const isTokenBlacklisted = await BlacklistToken.findOne({ token });
@@ -31,11 +31,11 @@ export const authUser = async (req, res, next) => {
                 status: "fail",
                 message: 'not found'
             });
-        }
-        
+        } 
         req.user = user;
         req.token = token;
-        next();``
+        console.log("Run Auth")
+        next();
     } catch (err) {
         // Handle JWT expiration error specifically
         if (err.name === 'TokenExpiredError') {
@@ -49,7 +49,7 @@ export const authUser = async (req, res, next) => {
             status: "fail",
             message: 'Invalid token'
         });
-    }
+    } 
 };
 
 export const authCaptain = async (req, res, next) => {
@@ -100,4 +100,4 @@ export const authCaptain = async (req, res, next) => {
             message: 'Invalid token'
         });
     }
-}
+}; 

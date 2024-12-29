@@ -31,7 +31,8 @@ export const createCaptain = async (req, res, next) => {
         
         res.status(201).json({
             status: 'success',
-            data: { token, captain }
+            token,
+            data: captain 
         });
     } catch (error) {
         res.status(400).json({
@@ -85,7 +86,7 @@ export const loginCaptain = async (req,res,next) =>{
 
 export const getcaptainProfile = async (req ,res ,next)=>{
     try {
-       res.status(200).json(req.captain);
+       res.status(200).json({data:req.captain});
     } catch (error) {
        res.status(401).json({
                message:error   

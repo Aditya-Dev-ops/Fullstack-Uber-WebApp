@@ -1,26 +1,48 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom'
-
+import axios from 'axios';
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import { CaptainContext } from '../context/CaptainContext';
 const CaptainLogin = () => {
   const [email ,setemail] = useState("");
   const [password , setpassword] = useState(""); 
-  function changeEmail(e){
-    e.preventDefault();
-    setemail(e.target.value);
-  }
-  function changePassword(e){
-    e.preventDefault();
-    setpassword(e.target.value)
-  }
+  const {setcaptain} = useContext(CaptainContext);
+  const navigate = useNavigate(); 
+  // function changeEmail(e){
+  //   e.preventDefault();
+  //   setemail(e.target.value);
+  // }
+  // function changePassword(e){
+  //   e.preventDefault();
+  //   setpassword(e.target.value)
+  // }
 
-  function FormSubmit(e){
+  async function FormSubmit(e){
     e.preventDefault();
-    console.log({
+    const data = {
       email,
       password
-    });
-    setemail("");
-    setpassword("");
+    };
+    console.log(data);
+    try{
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/captains/login`,data);
+      console.log(response);
+
+      if (response.status === 201) {
+        setcaptain(response.data.data);
+        localStorage.setItem('captain', JSON.stringify(response.data.data));
+        localStorage.setItem('token', response.data.token);
+        navigate('/captain-dashboard');
+      }
+      setemail("");
+      setpassword("");
+    }
+    catch(err){
+      console.log(err);
+      if(err){
+        setemail("");
+        setpassword("");
+      }
+    }
   }
   return (
     <div className="flex flex-col justify-between h-screen overflow-hidden">
@@ -33,13 +55,13 @@ const CaptainLogin = () => {
         required 
         type="email"
         value ={email}
-        onChange={changeEmail}
+        onChange={(e)=> setemail(e.target.value)}
         placeholder="email@example.com" 
         /> 
         <h3 className="text-xl mb-2">Enter Password</h3>
         <input
          className="bg-[#eeeeee] w-full border px-4 py-2 rounded mb-4"
-         onChange={changePassword}
+         onChange={(e)=> setpassword(e.target.value)}
          value={password}
          type="password" placeholder="password"
          />
